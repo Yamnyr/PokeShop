@@ -1,9 +1,10 @@
 import React from 'react';
+import Wrapper from './Components/Wrapper';
 // import PlayerManagement from './Components/PlayerManagement';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import Login from "./pages/Login";
-import Home from "./pages/Home";
-import Register from "./pages/Register";
+import Login from "./Pages/Login";
+import Home from "./Pages/Home";
+import Register from "./Pages/Register";
 
 function App() {
   return (
