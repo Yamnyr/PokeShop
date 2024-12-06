@@ -73,12 +73,12 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .cards-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 40px; /* Espacement de 20px entre chaque carte */
-    justify-content: center; /* Centrer les cartes sur la ligne */
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 43px;
+    /*width: 100%;*/
+    margin: auto;
 }
-
 .pokemon-card {
     width: 150px; /* Largeur de chaque carte */
     height: 200px; /* Hauteur de chaque carte */
