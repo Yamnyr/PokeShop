@@ -14,15 +14,20 @@ const PokemonCard = () => {
         if (!isExpanded) {
             // Calculez la position actuelle de la carte
             const rect = cardRef.current.getBoundingClientRect();
+
+            // Définir les styles initiaux pour l'animation
             setCardStyle({
                 position: 'fixed',
                 top: rect.top,
                 left: rect.left,
                 width: rect.width,
                 height: rect.height,
+                transition: 'all 0.8s ease-in-out',
+                transform: 'rotate(0deg)',
+                zIndex: 1000
             });
 
-            // Déclenchez l'animation d'expansion
+            // Déclencher l'animation d'expansion
             setTimeout(() => {
                 setCardStyle({
                     position: 'fixed',
@@ -30,31 +35,39 @@ const PokemonCard = () => {
                     left: '50%',
                     width: '300px',
                     height: '400px',
-                    transform: 'translate(-50%, -50%)',
+                    transform: 'translate(-50%, -50%) rotate(720deg)',
+                    transition: 'all 0.8s ease-in-out',
+                    zIndex: 1000
                 });
                 setIsExpanded(true);
-            }, 0);
+                setIsFlipped(true);
+            }, 50);
         } else {
-            // Retournez à la position d'origine
+            // Retourner à la position d'origine
             const rect = cardRef.current.getBoundingClientRect();
+
             setCardStyle({
                 position: 'fixed',
                 top: rect.top,
                 left: rect.left,
                 width: rect.width,
                 height: rect.height,
+                transition: 'all 0.8s ease-in-out',
+                transform: 'rotate(0deg)',
+                zIndex: 1000
             });
 
             setTimeout(() => {
                 setCardStyle({});
                 setIsExpanded(false);
-            }, 300); // Correspond à la durée de l'animation
+                setIsFlipped(false);
+            }, 800);
         }
     };
 
     return (
         <div>
-            {/* Overlay affichée uniquement si la carte est agrandie */}
+            {/* Overlay affiché uniquement si la carte est agrandie */}
             {isExpanded && <div className="page-overlay" onClick={handleCardClick}></div>}
 
             <div
@@ -73,8 +86,6 @@ const PokemonCard = () => {
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                         }}
-                        onMouseEnter={() => setIsFlipped(true)}
-                        onMouseLeave={() => setIsFlipped(false)}
                     />
                     {/* Face arrière de la carte */}
                     <div className="card-back">
