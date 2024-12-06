@@ -15,8 +15,8 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre douce autour de la carte pour un effet de profondeur */
 }
 
-.card-name, 
-.pokemon-price, 
+.card-name,
+.pokemon-price,
 .pokemon-owner {
     display:  block; /* Permet de mettre les éléments côte à côte, mais les garder comme des blocs */
     background-color: #fff; /* Fond blanc pour chaque case de texte */
