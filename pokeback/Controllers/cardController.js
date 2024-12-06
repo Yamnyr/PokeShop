@@ -103,14 +103,83 @@ const deleteCard = async (req, res) => {
 // Récupérer toutes les cartes
 const getCards = async (req, res) => {
     try {
-        const cards = await Card.find().populate("type", "name image").populate("owner", "username");
-        res.status(200).json(cards);
+        // Extraction des paramètres de requête
+        const {
+            name,
+            minPrice,
+            maxPrice,
+            typeId,
+            ownerId,
+            sortBy = 'name',
+            sortOrder = 'asc',
+            page = 1,       // Numéro de page (commence à 1)
+            limit = 10      // Nombre de cartes par page
+        } = req.query;
+
+        // Conversion des paramètres en nombres
+        const pageNumber = parseInt(page);
+        const limitNumber = parseInt(limit);
+
+        // Calcul de l'offset pour la pagination
+        const skipIndex = (pageNumber - 1) * limitNumber;
+
+        // Construction de la requête de filtrage
+        const filter = {};
+
+        // Filtre par nom (regex insensible à la casse)
+        if (name) {
+            filter.name = { $regex: name, $options: 'i' };
+        }
+
+        // Filtres de prix
+        if (minPrice) {
+            filter.price = { ...filter.price, $gte: parseFloat(minPrice) };
+        }
+        if (maxPrice) {
+            filter.price = { ...filter.price, $lte: parseFloat(maxPrice) };
+        }
+
+        // Filtres par type et propriétaire
+        if (typeId) {
+            filter.type = typeId;
+        }
+        if (ownerId) {
+            filter.owner = ownerId;
+        }
+
+        // Création de l'objet de tri
+        const sortOptions = {};
+        sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
+
+        // Requête avec filtres, population, tri et pagination
+        const cards = await Card.find(filter)
+            .populate("type", "name image")
+            .populate("owner", "username")
+            .sort(sortOptions)
+            .skip(skipIndex)
+            .limit(limitNumber);
+
+        // Compter le nombre total de documents correspondant au filtre
+        const totalCards = await Card.countDocuments(filter);
+
+        // Calcul du nombre total de pages
+        const totalPages = Math.ceil(totalCards / limitNumber);
+
+        // Réponse avec les cartes et les informations de pagination
+        res.status(200).json({
+            cards,
+            pagination: {
+                currentPage: pageNumber,
+                totalPages: totalPages,
+                totalCards: totalCards,
+                cardsPerPage: limitNumber
+            }
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Server error" });
     }
 };
-
 // Récupérer une carte par son ID
 const getCard = async (req, res) => {
     const { id } = req.params;
