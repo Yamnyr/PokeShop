@@ -542,3 +542,8 @@ p {
 .pagination-controls button:last-child {
   width: 80px; /* Largeur plus grande pour "Previous" et "Next" */
 }
+
+.button-myprofile {
+  display: flex;
+  justify-content: center;
+}
