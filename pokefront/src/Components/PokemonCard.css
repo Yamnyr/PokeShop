@@ -1,17 +1,19 @@
 .pokemon-card {
-    width: 250px;
-    height: 350px;
+    position: relative;
     perspective: 1000px;
     cursor: pointer;
+    width: 150px;
+    height: 200px;
+    transition: transform 0.3s ease-in-out;
+    z-index: 1; /* Priorité basse dans l'état initial */
 }
 
 .card-inner {
+    position: relative;
     width: 100%;
     height: 100%;
-    position: relative;
-    transition: transform 0.7s;
     transform-style: preserve-3d;
-    transform-origin: center;
+    transition: transform 0.8s cubic-bezier(0.4, 0.2, 0.2, 1);
 }
 
 .card-inner.is-flipped {
@@ -20,46 +22,92 @@
 
 .card-front,
 .card-back {
+    position: absolute;
     width: 100%;
     height: 100%;
-    position: absolute;
     backface-visibility: hidden;
-    border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.card-front {
-    z-index: 2;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .card-back {
-    background: url("https://i0.wp.com/pokegraph.com/wp-content/uploads/2024/02/1000018947.png?resize=734%2C1023&ssl=1");
-    background-size: cover;
-    color: white;
     transform: rotateY(180deg);
+    background-color: #f8f9fa;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    text-align: center;
-}
-
-.card-back h2 {
-    margin-bottom: 15px;
-    font-size: 1.2em;
-}
-
-.pokemon-details {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-/* Exemple d'utilisation */
-.app-container {
-    display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #f5f5f5;
+}
+
+/* Style de la carte agrandie venant du coin supérieur droit avec rotation continue */
+.card-expanded {
+    position: fixed;
+    top: 10%; /* Point de départ ajustable */
+    left: 90%; /* Point de départ ajustable */
+    transform: translate(-90%, -10%) scale(0.5) rotateY(0deg); /* Petit et dans le coin au départ */
+    z-index: 1000;
+    width: 300px;
+    height: 400px;
+    animation: expand-card 2s linear forwards; /* Animation plus fluide, sans pause */
+}
+
+/* Animation pour déplacer la carte vers le centre avec rotation continue */
+@keyframes expand-card {
+    0% {
+        top: 10%;
+        left: 90%;
+        transform: translate(-90%, -10%) scale(0.5) rotateY(0deg); /* Début sans rotation */
+    }
+    50% {
+        top: 30%;
+        left: 70%;
+        transform: translate(-70%, -30%) scale(1.1) rotateY(540deg)  rotate(180deg); /* 1.5 tours au milieu */
+    }
+    100% {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1.5) rotateY(1080deg) rotate(360deg); /* 3 tours au final */
+    }
+}
+
+/* Overlay sombre */
+.page-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.page-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Effet d'expansion */
+.pokemon-card.expanding {
+    z-index: 1000; /* Priorité maximale pendant l'animation */
+    animation: expand-card 2s linear forwards; /* Animation plus fluide, sans pause */
+}
+
+/* Animation inverse pour retour à l'emplacement initial */
+.pokemon-card.shrinking {
+    animation: shrink-card 2s ease-in-out forwards;
+}
+
+@keyframes shrink-card {
+    0% {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1.5) rotateY(1080deg); /* 3 tours */
+    }
+    100% {
+        top: 10%;
+        left: 90%;
+        transform: translate(-90%, -10%) scale(0.5) rotateY(0deg); /* Retour sans rotation */
+    }
 }
