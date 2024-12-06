@@ -3,7 +3,7 @@ import { cardService } from "../Services/cardsApi";
 import Card from "../Components/Card";
 import CardModal from "../Components/Modal";
 import CreateCardModal from "../Components/Modal";
-import { Edit3, Trash2 } from "lucide-react";
+import { Edit3, Trash2 , Plus  } from "lucide-react";
 
 const Profile = () => {
   const [myCards, setMyCards] = useState([]);
@@ -84,7 +84,7 @@ const Profile = () => {
           onClick={() => setModalType("create")} // Open create modal
           className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
         >
-          Create New Card
+          <Plus />
         </button>
       </div>
 
@@ -100,10 +100,7 @@ const Profile = () => {
                   onClick={() => handleCardEdit(card)}
                   className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
                 >
-                  <img
-                    src="https://cdn.icon-icons.com/icons2/916/PNG/512/Edit_icon-icons.com_71853.png"
-                    alt="Edit"
-                  />
+                  <Edit3 color="white" />
                 </button>
 
                 <button

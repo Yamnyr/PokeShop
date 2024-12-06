@@ -1,16 +1,17 @@
 .title-clearButton {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     width: 240px;
 }
 
 .title-clearButton .clear {
     display: flex;
-    align-items: center;
+    align-items: left;
+    justify-content: space-evenly;
     background-color: #ffcc00;
     color: white;
-    border: 1px solid #ddd;
+
     height: 40px;
 }
 

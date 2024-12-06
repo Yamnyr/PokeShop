@@ -411,15 +411,18 @@ button:hover {
 
 .bg-blue-500 {
   background-color: #007bff;
-  
+  padding: 6px; /* Uniformise le padding */
+  width:  40px ; /* Largeur fixe */
+  height: 40px; /* Hauteur fixe pour correspondre à la largeur */
+  color: white;
 }
 
 .bg-blue-600 {
-  background-color: #3182ce;
+  background-color: #0b78dd;
 }
 
 .bg-red-500 {
-  background-color: #861717;
+  background-color: #c81f1f;
   
 }
 
@@ -506,11 +509,13 @@ p {
   display: flex;
   justify-content: center; /* Centre horizontalement */
   margin-top: 20px; /* Espacement au-dessus de la pagination */
+ 
 }
 
 .pagination-controls {
   display: flex;
   align-items: center; /* Aligne les éléments verticalement au centre */
+
 }
 
 .pagination-controls button {
@@ -518,23 +523,23 @@ p {
   margin: 0 5px;
   font-size: 14px;
   cursor: pointer;
-  border: 1px solid #ddd;
   border-radius: 5px;
   /*background-color: #fff;*/
   transition: background-color 0.3s ease;
+  background-color: #e6b800;
 }
 
 .pagination-controls button:hover {
-  background-color: #f0f0f0; /* Effet au survol */
+  background-color: #eba337; /* Effet au survol */
 }
 
 .pagination-controls button.active {
-  background-color: #007bff;
+  background-color: #d58d21;
   color: white;
 }
 
 .pagination-controls button:disabled {
-  background-color: #e0e0e0;
+  background-color: #ffd889;
   cursor: not-allowed;
 }
 
@@ -545,5 +550,14 @@ p {
 
 .button-myprofile {
   display: flex;
-  justify-content: center;
+  border: none;
+  outline: none;
+  margin-left: 30px;
+  margin-top: 15px;
+  padding: 6px; /* Uniformise le padding */
+  width: 40px ; /* Largeur fixe */
+  height: 40px; /* Hauteur fixe pour correspondre à la largeur */
+  border-radius: 0.375rem; /* Bords arrondis */
+  transition: background-color 0.3s ease; /* Animation pour le changement de couleur */
 }
+

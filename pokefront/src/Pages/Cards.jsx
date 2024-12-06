@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { cardService } from "../Services/cardsApi";
 import PokemonCard from "../Components/Card";
 import "./Cards.css";
+import { MoveRight,MoveLeft ,RefreshCcw } from "lucide-react";
 
 const Cards = () => {
   const [cards, setCards] = useState([]);
@@ -92,7 +93,7 @@ const Cards = () => {
         <div className="title-clearButton">
           <h1>Cards</h1>
           <button className="clear" onClick={handleClearFilters}>
-            Clear Filters
+          <RefreshCcw />
           </button>
         </div>
 
@@ -141,7 +142,7 @@ const Cards = () => {
                       onClick={() => handlePageChange(currentPage - 1)}
                       disabled={currentPage === 1}
                   >
-                    Previous
+                    <MoveLeft />
                   </button>
 
                   {/* Page numbers */}
@@ -159,7 +160,7 @@ const Cards = () => {
                       onClick={() => handlePageChange(currentPage + 1)}
                       disabled={currentPage === totalPages}
                   >
-                    Next
+                    <MoveRight />
                   </button>
                 </div>
             )}
