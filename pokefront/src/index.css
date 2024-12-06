@@ -40,7 +40,7 @@ code {
 }
 
 .nav-link:hover {
-  color: #4a90e2;
+  color: #1860a7;
 }
 
 .nav-link::after {
@@ -370,4 +370,131 @@ button:hover {
 
 .modal-overlay.open .modal-content {
   transform: scale(1);
+}
+
+
+
+/* Boutons de modification et suppression */
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  padding: 6px 10px; /* Réduction du padding pour les rendre plus compacts */
+  margin-left: 10px; /* Espacement entre les boutons */
+  font-size: 12px; /* Taille de texte plus petite */
+  border-radius: 0.375rem; /* Bords arrondis pour les boutons */
+  transition: background-color 0.3s ease;
+  display: flex; /* Permet aux icônes d'être centrées dans le bouton */
+  align-items: center;
+  justify-content: center;
+}
+
+button img {
+  width: 25px; /* Taille de l'icône plus petite */
+  height: 25px; /* Taille de l'icône plus petite */
+}
+
+button:hover {
+  opacity: 0.8; /* Légère réduction d'opacité au survol */
+}
+
+/* Bouton de création de carte */
+.bg-green-500 {
+  background-color: #38a169;
+  
+}
+
+.bg-green-600 {
+  background-color: #2f855a;
+}
+
+.bg-blue-500 {
+  background-color: #2882cb;
+  
+}
+
+.bg-blue-600 {
+  background-color: #3182ce;
+}
+
+.bg-red-500 {
+  background-color: #861717;
+  
+}
+
+.bg-red-600 {
+  background-color: #c53030;
+}
+
+
+/* Grid des cartes */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); /* Par défaut, une carte par ligne */
+  gap: 20px; /* Espacement entre chaque carte */
+  margin-top: 20px; /* Un peu d'espace au-dessus de la grille */
+}
+
+/* Ajustements pour les écrans moyens (tablettes) et plus grands */
+@media (min-width: 768px) {
+  .cards-grid {
+      grid-template-columns: repeat(3, 1fr); /* 2 cartes par ligne sur les écrans moyens */
+  }
+}
+
+@media (min-width: 1024px) {
+  .cards-grid {
+      grid-template-columns: repeat(5, 1fr); /* 3 cartes par ligne sur les écrans larges */
+  }
+}
+
+/* Carte individuelle */
+.relative {
+  position: relative;
+  background-color: white;
+  border-radius: 8px;
+  
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Sections sous les cartes */
+.flex.justify-between.mt-2 {
+  margin-top: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Boutons de modification et suppression */
+button:hover {
+  opacity: 0.8; /* Légère réduction d'opacité au survol */
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Style de la carte lors de l'édition */
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+}
+
+/* Messages d'erreur ou de chargement */
+p {
+  font-size: 1rem;
+  color: #555; /* Texte gris clair */
 }

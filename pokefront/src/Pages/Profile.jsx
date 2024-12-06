@@ -93,18 +93,27 @@ const Profile = () => {
                         <div key={card._id} className="relative">
                             <Card card={card} onEdit={() => handleCardEdit(card)}/>
                             <div className="flex justify-between mt-2">
-                                <button
-                                    onClick={() => handleCardEdit(card)}
-                                    className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+                            <button
+                                onClick={() => handleCardEdit(card)}
+                                className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
                                 >
-                                    Modifier
-                                </button>
-                                <button
-                                    onClick={() => handleDeleteCard(card._id)}
-                                    className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                                <img
+                                    src="https://cdn.icon-icons.com/icons2/916/PNG/512/Edit_icon-icons.com_71853.png"
+                                    alt="Edit"
+                                />
+                            </button>
+
+                            <button
+                                onClick={() => handleDeleteCard(card._id)}
+                                className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
                                 >
-                                    Supprimer
-                                </button>
+                                <img
+                                    src="https://toppng.com/uploads/preview/big-trash-can-vector-trash-can-icon-1156305906701r6eta2fm.png"
+                                    alt="Delete"
+                                />
+                            </button>
+
+
                             </div>
                         </div>
                     ))}
