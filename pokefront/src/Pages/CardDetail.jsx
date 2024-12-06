@@ -1,4 +1,4 @@
-// detail d'une card'
+// detail d'une card
 
 import React, { useEffect, useState } from 'react';
 
