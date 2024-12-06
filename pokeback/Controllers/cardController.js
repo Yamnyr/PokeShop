@@ -103,7 +103,51 @@ const deleteCard = async (req, res) => {
 // Récupérer toutes les cartes
 const getCards = async (req, res) => {
     try {
-        const cards = await Card.find().populate("type", "name image").populate("owner", "username");
+        // Extraction des paramètres de requête
+        const {
+            name,
+            minPrice,
+            maxPrice,
+            typeId,
+            ownerId,
+            sortBy = 'name',
+            sortOrder = 'asc'
+        } = req.query;
+
+        // Construction de la requête de filtrage
+        const filter = {};
+
+        // Filtre par nom (regex insensible à la casse)
+        if (name) {
+            filter.name = { $regex: name, $options: 'i' };
+        }
+
+        // Filtres de prix
+        if (minPrice) {
+            filter.price = { ...filter.price, $gte: parseFloat(minPrice) };
+        }
+        if (maxPrice) {
+            filter.price = { ...filter.price, $lte: parseFloat(maxPrice) };
+        }
+
+        // Filtres par type et propriétaire
+        if (typeId) {
+            filter.type = typeId;
+        }
+        if (ownerId) {
+            filter.owner = ownerId;
+        }
+
+        // Création de l'objet de tri
+        const sortOptions = {};
+        sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
+
+        // Requête avec filtres, population et tri
+        const cards = await Card.find(filter)
+            .populate("type", "name image")
+            .populate("owner", "username")
+            .sort(sortOptions);
+
         res.status(200).json(cards);
     } catch (error) {
         console.error(error);
