@@ -1,27 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import { cardService } from '../Services/cardsApi';
 
-const Modal = ({ card, onClose, onUpdate, onDelete }) => {
+const CreateCardModal = ({ onClose, onCreate, onUpdate, card }) => {
     const [cardData, setCardData] = useState({
-        name: card.name,
-        price: card.price,
-        type: card.type._id,
-        image: card.image
+        name: '',
+        price: '',
+        type: '',
+        image: ''
     });
+
     const [types, setTypes] = useState([]);
-    const [isDeleting, setIsDeleting] = useState(false);
+    const [isCreating, setIsCreating] = useState(false);
 
     useEffect(() => {
         const fetchTypes = async () => {
             try {
                 const typesData = await cardService.fetchCardTypes();
                 setTypes(typesData);
+                if (typesData.length > 0 && !card) {
+                    setCardData(prev => ({
+                        ...prev,
+                        type: typesData[0]._id
+                    }));
+                }
             } catch (error) {
                 console.error('Error fetching types:', error);
             }
         };
+
         fetchTypes();
-    }, []);
+    }, [card]);
+
+    useEffect(() => {
+        if (card) {
+            setCardData({
+                name: card.name,
+                price: card.price,
+                type: card.type._id,
+                image: card.image || ''
+            });
+        }
+    }, [card]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -34,35 +53,30 @@ const Modal = ({ card, onClose, onUpdate, onDelete }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const updatedCard = await cardService.updateCard(card._id, cardData);
-            onUpdate(updatedCard);
+            setIsCreating(true);
+            if (card) {
+                const updatedCard = await cardService.updateCard(card._id, cardData);
+                onUpdate(updatedCard);
+            } else {
+                const newCard = await cardService.createCard(cardData);
+                onCreate(newCard);
+            }
             onClose();
         } catch (error) {
-            console.error('Error updating card:', error);
-        }
-    };
-
-    const handleDelete = async () => {
-        if (window.confirm('Êtes-vous sûr de vouloir supprimer cette carte ?')) {
-            try {
-                setIsDeleting(true);
-                await cardService.deleteCard(card._id);
-                onDelete(card._id);
-                onClose();
-            } catch (error) {
-                console.error('Error deleting card:', error);
-                setIsDeleting(false);
-            }
+            console.error('Error creating/updating card:', error);
+            setIsCreating(false);
         }
     };
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-            <div className="bg-white p-6 rounded-lg w-96">
-                <h2 className="text-2xl mb-4">Modifier la Carte</h2>
-                <form onSubmit={handleSubmit}>
+        <div className="modal-overlay open">
+            <div className="modal-content">
+                <div className="modal-header">
+                    <h2>{card ? 'Edit Card' : 'Create New Card'}</h2>
+                </div>
+                <form onSubmit={handleSubmit} className="modal-form">
                     <div className="mb-4">
-                        <label className="block mb-2">Nom</label>
+                        <label className="block mb-2">Name</label>
                         <input
                             type="text"
                             name="name"
@@ -73,7 +87,7 @@ const Modal = ({ card, onClose, onUpdate, onDelete }) => {
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block mb-2">Prix</label>
+                        <label className="block mb-2">Price</label>
                         <input
                             type="number"
                             name="price"
@@ -93,14 +107,14 @@ const Modal = ({ card, onClose, onUpdate, onDelete }) => {
                             required
                         >
                             {types.map(type => (
-                                <option key={type.id} value={type.id}>
+                                <option key={type._id} value={type._id}>
                                     {type.name}
                                 </option>
                             ))}
                         </select>
                     </div>
                     <div className="mb-4">
-                        <label className="block mb-2">URL de l'image</label>
+                        <label className="block mb-2">Image URL (Optional)</label>
                         <input
                             type="text"
                             name="image"
@@ -109,27 +123,20 @@ const Modal = ({ card, onClose, onUpdate, onDelete }) => {
                             className="w-full p-2 border rounded"
                         />
                     </div>
-                    <div className="flex justify-between">
+                    <div className="modal-buttons">
                         <button
                             type="submit"
-                            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                            disabled={isCreating}
+                            className="primary"
                         >
-                            Mettre à jour
-                        </button>
-                        <button
-                            type="button"
-                            onClick={handleDelete}
-                            disabled={isDeleting}
-                            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-                        >
-                            {isDeleting ? 'Suppression...' : 'Supprimer'}
+                            {isCreating ? 'Saving...' : card ? 'Save Changes' : 'Create Card'}
                         </button>
                         <button
                             type="button"
                             onClick={onClose}
-                            className="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400"
+                            className="secondary"
                         >
-                            Annuler
+                            Cancel
                         </button>
                     </div>
                 </form>
@@ -138,4 +145,4 @@ const Modal = ({ card, onClose, onUpdate, onDelete }) => {
     );
 };
 
-export default Modal;
+export default CreateCardModal;
