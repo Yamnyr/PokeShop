@@ -30,6 +30,7 @@ export const cardService = {
     // Nouvelle méthode pour mettre à jour une carte
     updateCard: async (cardId, cardData) => {
         try {
+            console.log(cardData)
             const token = localStorage.getItem('token');
             const response = await axios.put(`${API_BASE_URL}/update/${cardId}`, cardData, {
                 headers: {
@@ -81,5 +82,21 @@ export const cardService = {
             console.error(error);
             throw error;
         }
-    }
+    },
+
+    createCard: async (cardData) => {
+        try {
+            console.log(cardData)
+            const token = localStorage.getItem('token');
+            const response = await axios.post(`${API_BASE_URL}/create`, cardData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    },
 };
