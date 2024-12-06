@@ -110,7 +110,7 @@ const Cards = () => {
 
       {/* Affichage des cartes */}
       <div className="cards-container">
-        {isLoading && <p>Loading...</p>}
+        {/* {isLoading && <p>Loading...</p>} */}
         {error && <p>Error: {error}</p>}
         {/* Ajout d'une transition pour éviter le clignotement */}
         <div className={`cards-list ${isLoading ? "loading" : ""}`}>
