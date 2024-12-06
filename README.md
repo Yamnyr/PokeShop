@@ -1,11 +1,11 @@
 # PokeShop
 
 ## Project Overview
-Un projet développé par Quentin Waroquet, composé de deux sous-projets principaux : **LCSFRONT** (React) et **LCSBACK** (Node Express).
+Un projet de catalogue ce darte pokemon développé par Marine, Corentin, Quentin composé de deux sous-projets principaux : **POKEFRONT** (React) et **POKEBACK** (Node Express).
 
 ## Sous-Projets
 
-### LCSFRONT (Frontend)
+### POKEFRONT (Frontend)
 - **Technologie** : React
 - **Configuration** :
 ```bash
@@ -14,7 +14,7 @@ npm install
 npm start
 ```
 
-### LCSBACK (Backend)
+### POKEBACK (Backend)
 - **Technology**: Node.js with Express / mongodb
 - **Setup**:
 ```bash
