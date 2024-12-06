@@ -43,9 +43,9 @@ const Cards = () => {
   // Effect pour récupérer les cartes chaque fois que les filtres changent
   useEffect(() => {
     getCards();
-  }, [filters]);
+  }, [filters]); // Charger les cartes lorsque les filtres changent
 
-  // Fonction pour gérer le changement de filtre
+  // Fonction pour gérer le changement de filtre (type de carte)
   const handleFilterChange = (typeId) => {
     setFilters({ typeId }); // Applique le filtre sélectionné
   };
@@ -53,18 +53,16 @@ const Cards = () => {
   // Fonction pour réinitialiser les filtres
   const handleClearFilters = () => {
     setFilters({}); // Réinitialise les filtres, ce qui montre toutes les cartes
-    setMaxPrice(1000);
+    setMaxPrice(1000); // Réinitialiser le prix à 1000
   };
 
-  // Fonction pour mettre à jour la valeur du slider et appliquer le filtre
+  // Fonction pour mettre à jour la valeur du slider sans appliquer immédiatement le filtre
   const handlePriceChange = (e) => {
-    const newMaxPrice = e.target.value;
-    setMaxPrice(newMaxPrice);
-    setFilters((prevFilters) => ({ ...prevFilters, maxPrice: newMaxPrice }));
+    setMaxPrice(e.target.value);
   };
 
-  // Fonction qui s'active lorsqu'on relâche le curseur et lance la recherche
-  const handlePriceChangeEnd = async (e) => {
+  // Fonction pour appliquer le filtre lorsque le curseur est relâché
+  const handlePriceChangeEnd = (e) => {
     const newMaxPrice = e.target.value;
     setFilters((prevFilters) => ({ ...prevFilters, maxPrice: newMaxPrice }));
   };
@@ -80,9 +78,7 @@ const Cards = () => {
       </div>
 
       <div className="price-filter">
-        <label htmlFor="priceRange">
-          Prix maximum: {maxPrice}€{maxPrice == 1000 && <span> et +</span>}
-        </label>
+        <label htmlFor="priceRange">Prix maximum: {maxPrice}€</label>
         <input
           type="range"
           id="priceRange"
@@ -91,7 +87,7 @@ const Cards = () => {
           step="10"
           value={maxPrice}
           onChange={handlePriceChange} // Met à jour la valeur du prix pendant que le curseur est déplacé
-          onMouseUp={handlePriceChangeEnd} // Applique le filtre lorsque le curseur est relâché
+          onMouseUp={handlePriceChangeEnd} // Applique le filtre uniquement lorsque le curseur est relâché
         />
       </div>
 
