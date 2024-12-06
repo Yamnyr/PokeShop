@@ -63,3 +63,31 @@ input[type="range"]::-webkit-slider-thumb {
     transform: scale(1.1);
 }
 
+.cards-container {
+    margin-top: 10px; /* Corriger l'espace (vous avez écrit "10 px", donc j'ai retiré l'espace) */
+    display: flex; /* Utilisation de Flexbox */
+    flex-wrap: wrap; /* Permet aux cartes de se déplacer à la ligne suivante lorsqu'elles sont trop larges */
+    gap: 20px; /* Espacement de 20px entre chaque carte */
+    justify-content: center; /* Centrer les cartes horizontalement */
+}
+
+.cards-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px; /* Espacement de 20px entre chaque carte */
+    justify-content: center; /* Centrer les cartes sur la ligne */
+}
+
+.pokemon-card {
+    width: 150px; /* Largeur de chaque carte */
+    height: 200px; /* Hauteur de chaque carte */
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Optionnel : Ajoutez un ajustement pour les grandes écrans pour afficher plus de cartes sur une ligne */
+@media (min-width: 768px) {
+    .pokemon-card {
+        width: 180px; /* Augmenter la largeur des cartes sur les grands écrans */
+        height: 240px; /* Augmenter la hauteur des cartes sur les grands écrans */
+    }
+}

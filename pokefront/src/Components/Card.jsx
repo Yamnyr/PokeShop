@@ -7,7 +7,17 @@ const PokemonCard = ({ card }) => {
     const [cardStyle, setCardStyle] = useState({});
     const cardRef = useRef(null);
 
-    
+       // Gestion du survol de la carte
+       const handleMouseEnter = () => {
+        
+       setIsFlipped(true); 
+        
+    };
+
+    const handleMouseLeave = () => {
+        setIsFlipped(false); // Remettre la carte dans sa position normale
+    };
+
     const handleCardClick = () => {
         if (!isExpanded) {
             const rect = cardRef.current.getBoundingClientRect();
@@ -60,54 +70,54 @@ const PokemonCard = ({ card }) => {
         }
     };
 
-    return (
-        <div>
-            {isExpanded && <div className="page-overlay" onClick={handleCardClick}></div>}
+   return (
+    <div>
+        {isExpanded && <div className="page-overlay" onClick={handleCardClick}></div>}
 
-            <div
-                className="pokemon-card"
-                ref={cardRef}
-                style={cardStyle}
-                onClick={handleCardClick}
-            >
-                <div className={`card-inner ${isFlipped ? "is-flipped" : ""}`}>
-                    {/* Face avant de la carte */}
-                    <div
-                        className="card-front"
-                        style={{
-                            backgroundImage: `url(${card.image})`,
-                            backgroundSize: "cover",
-                            backgroundPosition: "center",
-                        }}
-                    />
-                    {/* Face arrière de la carte */}
-                    <div className="card-back"
-                        style={{
-                            backgroundImage: `url(https://img00.deviantart.net/fd26/i/2016/259/5/a/pokemon_card_backside_in_high_resolution_by_atomicmonkeytcg-dah43cy.png)`,
-                            backgroundSize: "cover",
-                            backgroundPosition: "center",
-                        }}
-                         >
-                        <h2 className="card-name">{card.name}</h2>
-                        <div className="pokemon-details">
-                            <div className="pokemon-type">
-                                
-                            
-                                <img
-                                    src={card.type.image}
-                                    alt={card.type.name}
-                                    className="type-icon"
-                                />
-                                {/* <p className="type-name">{card.type.name}</p> */}
-                            </div>
-                            <p className="pokemon-price">Prix: {card.price}€</p>
-                            <p className="pokemon-owner">Propriétaire: {card.owner.username}</p>
+        <div
+            className="pokemon-card"
+            ref={cardRef}
+            style={cardStyle}
+            onClick={handleCardClick}
+            onMouseEnter={handleMouseEnter} // Quand la souris entre sur la carte
+            onMouseLeave={handleMouseLeave} // Quand la souris quitte la carte
+        >
+            <div className={`card-inner ${isFlipped ? "is-flipped" : ""}`}>
+                {/* Face avant de la carte */}
+                <div
+                    className="card-front"
+                    style={{
+                        backgroundImage: `url(${card.image})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                    }}
+                />
+                {/* Face arrière de la carte */}
+                <div className="card-back"
+                    style={{
+                        backgroundImage: `url(https://img00.deviantart.net/fd26/i/2016/259/5/a/pokemon_card_backside_in_high_resolution_by_atomicmonkeytcg-dah43cy.png)`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                    }}
+                >
+                    <h2 className="card-name">{card.name}</h2>
+                    <div className="pokemon-details">
+                        <div className="pokemon-type">
+                            <img
+                                src={card.type.image}
+                                alt={card.type.name}
+                                className="type-icon"
+                            />
                         </div>
+                        <p className="pokemon-price">Prix: {card.price}€</p>
+                        <p className="pokemon-owner">Propriétaire: {card.owner.username}</p>
                     </div>
                 </div>
             </div>
         </div>
-    );
+    </div>
+);
+
 };
 
 export default PokemonCard;
