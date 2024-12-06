@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Card from "../Components/Card";
 import { cardService } from "../Services/cardsApi";
+import PokemonCard from "../Components/Card";
+import card from "../Components/Card";
 import "./Cards.css";
 
 const Cards = () => {

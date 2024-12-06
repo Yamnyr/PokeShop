@@ -216,7 +216,36 @@ const getCardByUser = async (req, res) => {
     }
 };
 
+const getMyCards = async (req, res) => {
+    try {
+        // Utiliser l'ID de l'utilisateur connecté à partir de `req.user`
+        const userId = req.user.id;
+
+        // Requête pour trouver les cartes appartenant à l'utilisateur
+        const cards = await Card.find({ owner: userId })
+            .populate("type", "name image")
+            .populate("owner", "username");
+
+        // Vérification s'il y a des cartes
+        if (cards.length === 0) {
+            return res.status(200).json({
+                message: "Vous n'avez pas encore de cartes",
+                cards: []
+            });
+        }
+
+        // Répondre avec les cartes
+        res.status(200).json(cards);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Erreur serveur lors de la récupération de vos cartes" });
+    }
+};
+
+
+
 module.exports = {
+    getMyCards,
     createCard,
     updateCard,
     deleteCard,
