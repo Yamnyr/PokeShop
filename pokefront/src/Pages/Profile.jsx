@@ -16,8 +16,15 @@ const Profile = () => {
     const fetchMyCards = async () => {
       try {
         setLoading(true);
-        const data = await cardService.fetchMyCards();
-        setMyCards(data);
+        const response = await cardService.fetchMyCards();
+
+        if (response.cards && response.cards.length === 0) {
+          console.log(response.message || "No cards found");
+          setMyCards([]); // Assurez-vous que le tableau est vide
+        } else if (response.cards) {
+          setMyCards(response.cards);
+        }
+
         setLoading(false);
       } catch (err) {
         console.error("Error fetching my cards:", err);
@@ -89,7 +96,7 @@ const Profile = () => {
       </div>
 
       {myCards.length === 0 ? (
-        <p>You have no cards yet.</p>
+        <p>Vous ne possedez pas encore de cartes.</p>
       ) : (
         <div className="cards-grid grid grid-cols-1 md:grid-cols-3 gap-4">
           {myCards.map((card) => (
