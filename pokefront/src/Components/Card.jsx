@@ -35,7 +35,7 @@ const PokemonCard = ({ card }) => {
                     zIndex: 1000,
                 });
                 setIsExpanded(true);
-                setIsFlipped(false);
+                setIsFlipped(true);
             }, 50);
         } else {
             const rect = cardRef.current.getBoundingClientRect();
