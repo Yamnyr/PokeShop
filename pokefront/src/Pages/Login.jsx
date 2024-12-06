@@ -1,33 +1,34 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate, Link } from "react-router-dom";
+import { authService } from "../Services/api";
 
 const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [credentials, setCredentials] = useState({
+        email: "",
+        password: ""
+    });
     const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
+
+    const handleChange = (e) => {
+        const { id, value } = e.target;
+        setCredentials(prev => ({ ...prev, [id]: value }));
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        setLoading(true);
+        setIsLoading(true);
         setError(null);
 
         try {
-            const response = await axios.post("http://localhost:8080/user/login", {
-                password,
-                email,
-            });
-
-            localStorage.setItem("token", response.data.token);
-            navigate("/home");
+            const { token } = await authService.login(credentials.email, credentials.password);
+            localStorage.setItem("token", token);
+            navigate("/cards");
         } catch (error) {
-            setError(error.response ? error.response.data : "Une erreur est survenue");
+            setError(error.message || "Une erreur est survenue");
         } finally {
-            setLoading(false);
+            setIsLoading(false);
         }
     };
 
@@ -36,24 +37,24 @@ const Login = () => {
             <h2>Connexion</h2>
             <form onSubmit={handleSubmit} className="auth-form login-form">
                 <div className="form-group">
-                    <label htmlFor="email">Email:</label>
+                    <label htmlFor="email">Email :</label>
                     <input
                         type="email"
                         id="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        value={credentials.email}
+                        onChange={handleChange}
                         required
                         placeholder="Entrez votre email"
                     />
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="password">Mot de passe:</label>
+                    <label htmlFor="password">Mot de passe :</label>
                     <input
                         type="password"
                         id="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        value={credentials.password}
+                        onChange={handleChange}
                         required
                         placeholder="Entrez votre mot de passe"
                     />
@@ -61,13 +62,13 @@ const Login = () => {
 
                 {error && <p className="error-message">{error}</p>}
 
-                <button type="submit" disabled={loading}>
-                    {loading ? "Connexion..." : "Se connecter"}
+                <button type="submit" disabled={isLoading}>
+                    {isLoading ? "Connexion..." : "Se connecter"}
                 </button>
             </form>
 
             <p>
-                Vous n'avez pas de compte? <a href="/register">S'inscrire</a>
+                Vous n'avez pas de compte ? <Link to="/register">S'inscrire</Link>
             </p>
         </div>
     );

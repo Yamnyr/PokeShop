@@ -6,12 +6,10 @@ const NavBar = () => {
     const [username, setUsername] = useState("");
 
     useEffect(() => {
-        // Récupérez le token du localStorage
         const token = localStorage.getItem("token");
         if (token) {
             try {
-                // Décoder le token pour extraire le username
-                const decoded = jwtDecode(token);  // Updated function call
+                const decoded = jwtDecode(token);
                 setUsername(decoded.username);
             } catch (error) {
                 console.error("Erreur de décodage du token :", error);
@@ -22,7 +20,6 @@ const NavBar = () => {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        // Supprimez le token et redirigez l'utilisateur vers la page de connexion
         localStorage.removeItem("token");
         alert("Déconnexion réussie");
         navigate("/");
@@ -32,15 +29,11 @@ const NavBar = () => {
         <nav className="navbar">
             <ul className="nav-links">
                 <li>
-                    <Link to="/home" className="nav-link">Le Coin Sympa</Link>
+                    <Link to="/cards" className="nav-link">PokeShop</Link>
                 </li>
-                <li>
-                    <Link to="/user" className="nav-link">User</Link>
-                </li>
-
                 <div className="right-section">
                     <li>
-                        <Link>
+                        <Link to="/profile" className="nav-link">
                         {username && <span>Bienvenue, {username}</span>} {/* Message de bienvenue */}
                         </Link>
                     </li>
