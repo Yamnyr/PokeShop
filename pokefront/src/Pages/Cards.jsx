@@ -25,13 +25,14 @@ const Cards = () => {
   }, []);
 
   return (
-      <div>
-        <h1>Cards</h1>
-        {isLoading && <p>Loading...</p>}
-        {error && <p>Error: {error}</p>}
-        {!isLoading && cards.length === 0 && <p>No cards available.</p>}
-        {cards.length > 0 && cards.map((card) => <Card key={card.id} card={card} />)}
-      </div>
+    <div>
+      <h1>Cards</h1>
+      {isLoading && <p>Loading...</p>}
+      {error && <p>Error: {error}</p>}
+      {!isLoading && cards.length === 0 && <p>No cards available.</p>}
+      {cards.length > 0 &&
+        cards.map((card) => <Card key={card.id} card={card} />)}
+    </div>
   );
 };
 
