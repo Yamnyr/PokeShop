@@ -31,7 +31,7 @@ const Cards = () => {
       {error && <p>Error: {error}</p>}
       {!isLoading && cards.length === 0 && <p>No cards available.</p>}
       {cards.length > 0 &&
-        cards.map((card) => <Card key={card.id} card={card} />)}
+        cards.map((card) => <Card key={card._id} card={card} />)}
     </div>
   );
 };
