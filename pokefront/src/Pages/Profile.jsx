@@ -3,6 +3,7 @@ import { cardService } from "../Services/cardsApi";
 import Card from "../Components/Card";
 import CardModal from "../Components/Modal";
 import CreateCardModal from "../Components/Modal";
+import { Edit3, Trash2 } from "lucide-react";
 
 const Profile = () => {
   const [myCards, setMyCards] = useState([]);
@@ -107,12 +108,10 @@ const Profile = () => {
 
                 <button
                   onClick={() => handleDeleteCard(card._id)}
-                  className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                  className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 flex items-center"
                 >
-                  <img
-                    src="https://toppng.com/uploads/preview/big-trash-can-vector-trash-can-icon-1156305906701r6eta2fm.png"
-                    alt="Delete"
-                  />
+                  <Trash2 className="w-5 h-5" />
+                  <span className="ml-2"></span>
                 </button>
               </div>
             </div>
