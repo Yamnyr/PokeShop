@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width : 240px;
+    width: 240px;
 }
 
 .title-clearButton .clear {
@@ -12,7 +12,29 @@
     color: white;
     border: 1px solid #ddd;
     height: 40px;
-  }
+}
+
+input[type="range"] {
+    margin: 10px 0;
+    -webkit-appearance: none; /* Supprime l'apparence par défaut du range */
+    appearance: none;
+    width: 100%; /* Prend toute la largeur de la page */
+    height: 15px; /* Hauteur de la barre */
+    background: #ddd; /* Couleur de fond de la barre */
+    border-radius: 5px;
+    outline: none;
+}
+
+/* Style du curseur */
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Supprime l'apparence par défaut du curseur */
+    appearance: none;
+    width: 30px; /* Largeur du curseur */
+    height: 30px; /* Hauteur du curseur */
+    border-radius: 50%; /* Donne une forme ronde au curseur */
+    background: #ffcc00; /* Couleur du curseur */
+    cursor: pointer;
+}
 
 .title-clearButton .clear:hover {
     background-color: #e6b800;
@@ -20,6 +42,7 @@
 
 .filters {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
 }
 

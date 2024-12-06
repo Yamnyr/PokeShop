@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { cardService } from "../Services/cardsApi";
 import PokemonCard from "../Components/Card";
-import card from "../Components/Card";
 import "./Cards.css";
 
 const Cards = () => {
@@ -10,6 +9,7 @@ const Cards = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [filters, setFilters] = useState({}); // Gère les filtres appliqués
+  const [maxPrice, setMaxPrice] = useState(1000);
 
   // Fonction pour récupérer les cartes avec les filtres
   const getCards = async () => {
@@ -53,6 +53,20 @@ const Cards = () => {
   // Fonction pour réinitialiser les filtres
   const handleClearFilters = () => {
     setFilters({}); // Réinitialise les filtres, ce qui montre toutes les cartes
+    setMaxPrice(1000);
+  };
+
+  // Fonction pour mettre à jour la valeur du slider et appliquer le filtre
+  const handlePriceChange = (e) => {
+    const newMaxPrice = e.target.value;
+    setMaxPrice(newMaxPrice);
+    setFilters((prevFilters) => ({ ...prevFilters, maxPrice: newMaxPrice }));
+  };
+
+  // Fonction qui s'active lorsqu'on relâche le curseur et lance la recherche
+  const handlePriceChangeEnd = async (e) => {
+    const newMaxPrice = e.target.value;
+    setFilters((prevFilters) => ({ ...prevFilters, maxPrice: newMaxPrice }));
   };
 
   return (
@@ -65,6 +79,22 @@ const Cards = () => {
         </button>
       </div>
 
+      <div className="price-filter">
+        <label htmlFor="priceRange">
+          Prix maximum: {maxPrice}€{maxPrice == 1000 && <span> et +</span>}
+        </label>
+        <input
+          type="range"
+          id="priceRange"
+          min="0"
+          max="1000" // Valeur maximale du slider
+          step="10"
+          value={maxPrice}
+          onChange={handlePriceChange} // Met à jour la valeur du prix pendant que le curseur est déplacé
+          onMouseUp={handlePriceChangeEnd} // Applique le filtre lorsque le curseur est relâché
+        />
+      </div>
+
       {/* Barre de filtres */}
       <div className="filters">
         {types.map((type) => (
@@ -74,7 +104,6 @@ const Cards = () => {
             onClick={() => handleFilterChange(type._id)} // Met à jour les filtres en fonction du type sélectionné
           >
             <img src={type.image} alt={type.name} />
-            <span>{type.name}</span> {/* Affiche le nom du type */}
           </button>
         ))}
       </div>
@@ -83,9 +112,12 @@ const Cards = () => {
       <div className="cards-container">
         {isLoading && <p>Loading...</p>}
         {error && <p>Error: {error}</p>}
-        {!isLoading && cards.length === 0 && <p>No cards available.</p>}
-        {cards.length > 0 &&
-          cards.map((card) => <PokemonCard key={card._id} card={card} />)}
+        {/* Ajout d'une transition pour éviter le clignotement */}
+        <div className={`cards-list ${isLoading ? "loading" : ""}`}>
+          {cards.length === 0 && !isLoading && <p>No cards available.</p>}
+          {cards.length > 0 &&
+            cards.map((card) => <PokemonCard key={card._id} card={card} />)}
+        </div>
       </div>
     </div>
   );
