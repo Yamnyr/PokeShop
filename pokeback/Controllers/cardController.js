@@ -48,7 +48,7 @@ const updateCard = async (req, res) => {
         }
 
         // Vérifier si l'utilisateur est le propriétaire de la carte
-        if (card.owner.toString() !== req.user._id.toString()) {
+        if (card.owner.toString() !== req.user.id.toString()) {
             return res.status(403).json({ message: "You are not authorized to update this card" });
         }
 
@@ -87,7 +87,7 @@ const deleteCard = async (req, res) => {
         }
 
         // Vérifier si l'utilisateur est le propriétaire de la carte
-        if (card.owner.toString() !== req.user._id.toString()) {
+        if (card.owner.toString() !== req.user.id.toString()) {
             return res.status(403).json({ message: "You are not authorized to delete this card" });
         }
 

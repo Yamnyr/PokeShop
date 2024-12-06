@@ -1,17 +1,30 @@
 const jwt = require("jsonwebtoken");
 
 const authMiddleware = (req, res, next) => {
-    const token = req.headers.authorization.split(" ")[1];
+    const authHeader = req.headers.authorization;
 
-    if (!token) {
-        return res.status(401).send("Token manquant");
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({
+            message: "Invalid Authorization header",
+            details: "Token must be provided with 'Bearer ' prefix"
+        });
     }
 
+    const token = authHeader.split(" ")[1];
+
     try {
-        req.user = jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = {
+            id: decoded.id,
+            username: decoded.username  // Optional: include more user details if needed
+        };
         next();
     } catch (error) {
-        res.status(400).send("Token invalide");
+        console.error("Authentication error:", error.message);
+        res.status(401).json({
+            message: "Authentication failed",
+            details: error.message
+        });
     }
 };
 
