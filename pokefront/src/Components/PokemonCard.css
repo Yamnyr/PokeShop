@@ -5,7 +5,45 @@
     width: 150px;
     height: 200px;
     transition: transform 0.3s ease-in-out;
-    z-index: 10; /* Priorité basse dans l'état initial */
+    z-index:3; /* Priorité basse dans l'état initial */
+}
+
+.pokemon-details {
+    /* background-color: #145595; Vous pouvez garder votre couleur de fond */
+    padding: 20px; /* Ajoute de l'espace autour des éléments à l'intérieur de cette section */
+    border-radius: 15px; /* Bords arrondis pour la carte */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre douce autour de la carte pour un effet de profondeur */
+}
+
+.card-name, 
+.pokemon-price, 
+.pokemon-owner {
+    display:  block; /* Permet de mettre les éléments côte à côte, mais les garder comme des blocs */
+    background-color: #fff; /* Fond blanc pour chaque case de texte */
+    color: #145595; /* Texte dans une couleur qui contraste avec l'arrière-plan */
+    padding: 8px 15px; /* Ajoute de l'espace autour du texte */
+    border-radius: 12px; /* Bords arrondis pour chaque case */
+    margin: 8px; /* Espacement entre chaque case */
+    font-size: 14px; /* Taille du texte, à ajuster selon le besoin */
+}
+
+.pokemon-type {
+    display: flex; /* Utilisation de Flexbox pour aligner les éléments */
+    justify-content: center; /* Aligne horizontalement l'icône et le texte au centre */
+    padding: 8px 15px;
+    border-radius: 12px;
+    margin-top: 5px;
+}
+
+.type-icon {
+    width: 80px; /* Taille de l'icône */
+    height: auto;
+    margin-right: 10px; /* Espacement entre l'icône et le texte */
+    margin-top: -15px;
+}
+
+.pokemon-card:hover {
+    transform: rotateY(180deg);
 }
 
 .card-inner {
@@ -16,7 +54,7 @@
     transition: transform 0.8s cubic-bezier(0.4, 0.2, 0.2, 1);
 }
 
-.card-inner.is-flipped {
+.card-inner.is-flipped:hover {
     transform: rotateY(180deg);
 }
 
@@ -28,11 +66,12 @@
     backface-visibility: hidden;
     border-radius: 10px;
     overflow: hidden;
+    z-index: 3; /* Priorité basse dans l'état initial */
 }
 
 .card-back {
     transform: rotateY(180deg);
-    background-color: #f8f9fa;
+    /* background-color: #f8f9fa; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -78,7 +117,7 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.7);
-    z-index: 2;
+    z-index: 5;
     opacity: 1;
     transition: opacity 0.5s ease-in-out;
 }
@@ -96,24 +135,28 @@
 
 /* Animation inverse pour retour à l'emplacement initial */
 .pokemon-card.shrinking {
-    animation: shrink-card 2s ease-in-out forwards;
+    z-index: 1001; /* Priorité maximale pendant l'animation */
+    animation: shrink-card 0,5s linear forwards;
 }
+
 
 @keyframes shrink-card {
     0% {
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(1.5) rotateY(1080deg); /* 3 tours */
-    }
-    100% {
         top: 10%;
         left: 90%;
-        transform: translate(-90%, -10%) scale(0.5) rotateY(0deg); /* Retour sans rotation */
+        transform: translate(-90%, -10%) scale(1.5) rotateY(0deg); /* Début sans rotation */
+    }
+    50% {
+        top: 30%;
+        left: 70%;
+        transform: translate(-70%, -30%) scale(1.1) rotateY(540deg)  rotate(180deg); /* 1.5 tours au milieu */
+    }
+    100% {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.5) rotateY(1080deg) rotate(360deg); /* 3 tours au final */
     }
 }
-
-
-
 
 
 

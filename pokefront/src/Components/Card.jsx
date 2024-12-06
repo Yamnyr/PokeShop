@@ -7,6 +7,7 @@ const PokemonCard = ({ card }) => {
     const [cardStyle, setCardStyle] = useState({});
     const cardRef = useRef(null);
 
+    
     const handleCardClick = () => {
         if (!isExpanded) {
             const rect = cardRef.current.getBoundingClientRect();
@@ -34,7 +35,7 @@ const PokemonCard = ({ card }) => {
                     zIndex: 1000,
                 });
                 setIsExpanded(true);
-                setIsFlipped(true);
+                setIsFlipped(false);
             }, 50);
         } else {
             const rect = cardRef.current.getBoundingClientRect();
@@ -51,7 +52,8 @@ const PokemonCard = ({ card }) => {
             });
 
             setTimeout(() => {
-                setCardStyle({});
+                setCardStyle({
+                });
                 setIsExpanded(false);
                 setIsFlipped(false);
             }, 800);
@@ -79,16 +81,24 @@ const PokemonCard = ({ card }) => {
                         }}
                     />
                     {/* Face arrière de la carte */}
-                    <div className="card-back">
+                    <div className="card-back"
+                        style={{
+                            backgroundImage: `url(https://img00.deviantart.net/fd26/i/2016/259/5/a/pokemon_card_backside_in_high_resolution_by_atomicmonkeytcg-dah43cy.png)`,
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                        }}
+                         >
                         <h2 className="card-name">{card.name}</h2>
                         <div className="pokemon-details">
                             <div className="pokemon-type">
+                                
+                            
                                 <img
                                     src={card.type.image}
                                     alt={card.type.name}
                                     className="type-icon"
                                 />
-                                <p className="type-name">{card.type.name}</p>
+                                {/* <p className="type-name">{card.type.name}</p> */}
                             </div>
                             <p className="pokemon-price">Prix: {card.price}€</p>
                             <p className="pokemon-owner">Propriétaire: {card.owner.username}</p>

@@ -27,11 +27,11 @@ async function seedCards() {
                 type: types.find(t => t.name === 'Électrik')._id
             },
             {
-                name: 'Monflèmit EX',
+                name: 'Monaflèmit EX',
                 image: 'https://dz3we2x72f7ol.cloudfront.net/expansions/surging-sparks/fr-fr/SV08_FR_227.png',
                 price: 250,
                 owner: users[0]._id, // Ash
-                type: types.find(t => t.name === 'Feu')._id
+                type: types.find(t => t.name === 'Normal')._id
             },
             {
                 name: 'Gromago EX',
@@ -45,7 +45,7 @@ async function seedCards() {
                 image: 'https://dz3we2x72f7ol.cloudfront.net/expansions/151/fr-fr/SV3pt5_FR_6.png',
                 price: 180,
                 owner: users[2]._id, // Brock
-                type: types.find(t => t.name === 'Roche')._id
+                type: types.find(t => t.name === 'Feu')._id
             }
         ];
 
