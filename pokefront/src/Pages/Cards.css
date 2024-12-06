@@ -1,0 +1,41 @@
+.title-clearButton {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width : 240px;
+}
+
+.title-clearButton .clear {
+    display: flex;
+    align-items: center;
+    background-color: #ffcc00;
+    color: white;
+    border: 1px solid #ddd;
+    height: 40px;
+  }
+
+.title-clearButton .clear:hover {
+    background-color: #e6b800;
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+}
+
+.filters button {
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.filters button:hover {
+    transform: scale(1.1);
+}
+
+.filters button.active {
+    transform: scale(1.1);
+}
