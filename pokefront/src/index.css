@@ -391,8 +391,8 @@ button {
 }
 
 button img {
-  width: 25px; /* Taille de l'icône plus petite */
-  height: 25px; /* Taille de l'icône plus petite */
+  width: 50px; /* Taille de l'icône plus petite */
+  height: 50px; /* Taille de l'icône plus petite */
 }
 
 button:hover {
@@ -499,4 +499,46 @@ button:hover {
 p {
   font-size: 1rem;
   color: #555; /* Texte gris clair */
+}
+
+.pagination {
+  width: 100%;
+  display: flex;
+  justify-content: center; /* Centre horizontalement */
+  margin-top: 20px; /* Espacement au-dessus de la pagination */
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center; /* Aligne les éléments verticalement au centre */
+}
+
+.pagination-controls button {
+  padding: 8px 16px;
+  margin: 0 5px;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  /*background-color: #fff;*/
+  transition: background-color 0.3s ease;
+}
+
+.pagination-controls button:hover {
+  background-color: #f0f0f0; /* Effet au survol */
+}
+
+.pagination-controls button.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.pagination-controls button:disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
+}
+
+.pagination-controls button:first-child,
+.pagination-controls button:last-child {
+  width: 80px; /* Largeur plus grande pour "Previous" et "Next" */
 }

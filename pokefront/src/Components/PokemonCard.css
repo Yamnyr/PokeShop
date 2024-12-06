@@ -21,7 +21,7 @@
     display:  block; /* Permet de mettre les éléments côte à côte, mais les garder comme des blocs */
     background-color: #fff; /* Fond blanc pour chaque case de texte */
     color: #145595; /* Texte dans une couleur qui contraste avec l'arrière-plan */
-    padding: 8px 15px; /* Ajoute de l'espace autour du texte */
+    padding: 4px; /* Ajoute de l'espace autour du texte */
     border-radius: 12px; /* Bords arrondis pour chaque case */
     margin: 8px; /* Espacement entre chaque case */
     font-size: 14px; /* Taille du texte, à ajuster selon le besoin */
@@ -36,7 +36,7 @@
 }
 
 .type-icon {
-    width: 80px; /* Taille de l'icône */
+    width: 50px; /* Taille de l'icône */
     height: auto;
     margin-right: 10px; /* Espacement entre l'icône et le texte */
     margin-top: -15px;
