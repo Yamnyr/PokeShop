@@ -28,49 +28,4 @@ function App() {
   );
 }
 
-
-const App = () => {
-  const [cards, setCards] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-
-  useEffect(() => {
-      fetch(`/getall?page=${currentPage}&limit=30`)
-          .then((res) => res.json())
-          .then((data) => setCards(data))
-          .catch((error) => console.error(error));
-  }, [currentPage]);
-
-  const handleNextPage = () => {
-      setCurrentPage((prev) => prev + 1);
-  };
-
-  const handlePrevPage = () => {
-      if (currentPage > 1) setCurrentPage((prev) => prev - 1);
-  };
-
-  return (
-      <div className="app-container">
-          <div className="cards-container">
-              {cards.map((card) => (
-                  <PokemonCard
-                      key={card._id}
-                      imageUrl={card.image}
-                      name={card.name}
-                      type={card.type.name}
-                      hp={card.hp}
-                      attack={card.attack}
-                      defense={card.defense}
-                  />
-              ))}
-          </div>
-          <div className="pagination-controls">
-              <button onClick={handlePrevPage} disabled={currentPage === 1}>
-                  Previous
-              </button>
-              <button onClick={handleNextPage}>Next</button>
-          </div>
-      </div>
-  );
-};
-
 export default App;
